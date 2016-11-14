@@ -71,6 +71,10 @@ from .exceptions import StopUpdating
 @click.version_option(__version__)
 def pur(**options):
     """Command line entry point."""
+    pur_main(**options)
+
+def pur_main(**options):
+    """ real entry point """
 
     if not options['requirement']:
         options['requirement'] = 'requirements.txt'
