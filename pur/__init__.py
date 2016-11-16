@@ -74,7 +74,7 @@ def pur(**options):
     pur_main(**options)
 
 def pur_main(**options):
-    """ real entry point """
+    """ Real entry point to allow for programmatic access to pur."""
 
     if not options['requirement']:
         options['requirement'] = 'requirements.txt'
