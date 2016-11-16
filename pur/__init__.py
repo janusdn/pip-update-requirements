@@ -233,6 +233,33 @@ def get_requirements_and_latest(filename, force=False):
             yield (orig_line, req, spec_ver, latest_ver)
 
 
+def get_requirements(filename):
+    """Parse a requirements file.
+
+    Yields a tuple of (original line, InstallRequirement instance,
+    spec_versions).
+
+    :param filename:  Path to a requirements.txt file.
+    :param force:     Force getting latest version even for packages without
+                      a version specified.
+    """
+    session = PipSession()
+    finder = PackageFinder(
+        session=session, find_links=[], index_urls=[PyPI.simple_url])
+
+    _, content = get_file_content(filename, session=session)
+    for line_number, line, orig_line in yield_lines(content):
+        line = req_file.COMMENT_RE.sub('', line)
+        line = line.strip()
+        req = parse_requirement_line(line, filename, line_number, session, finder)
+        if req is None or req.name is None or req_file.SCHEME_RE.match(req.name):
+            yield (orig_line, None, None)
+            continue
+        spec_ver = current_version(req)
+        if spec_ver:
+            yield (orig_line, req, spec_ver)
+
+
 def parse_requirement_line(line, filename, line_number, session, finder):
     """Parse a requirement line and return an InstallRequirement instance.
 
