@@ -132,14 +132,14 @@ def update_requirements(filename, output_filename, options):
 
                 try:
                     if should_update(req, spec_ver, latest_ver,
-                                    force=options['force'],
-                                    interactive=options['interactive']):
+                                     force=options['force'],
+                                     interactive=options['interactive']):
 
                         if not spec_ver[0]:
                             new_line = '{0}=={1}'.format(line, latest_ver)
                         else:
                             new_line = update_requirement(req, line, spec_ver,
-                                                        latest_ver)
+                                                          latest_ver)
                         buf.write(new_line)
 
                         if new_line != line:
