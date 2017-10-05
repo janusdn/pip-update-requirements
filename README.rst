@@ -79,6 +79,12 @@ Options
 --help                   Show this message and exit.
 
 
+Distribution
+------------
+
+`python setup.py bdist_wheel --universal`
+
+
 Contributing
 ------------
 
